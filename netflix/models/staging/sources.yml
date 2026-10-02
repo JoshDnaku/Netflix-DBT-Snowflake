@@ -1,0 +1,23 @@
+version: 2
+
+# Declares the raw tables (loaded from CSV into MOVIELENS.RAW) as dbt sources.
+# Staging models reference these with source('netflix', '<name>'), which makes
+# lineage trace all the way back to raw in the DAG and docs.
+sources:
+  - name: netflix
+    database: MOVIELENS
+    schema: RAW
+    description: Raw MovieLens tables loaded from CSV.
+    tables:
+      - name: r_movies
+        identifier: raw_movies
+      - name: r_ratings
+        identifier: raw_ratings
+      - name: r_tags
+        identifier: raw_tags
+      - name: r_genome_tags
+        identifier: raw_genome_tags
+      - name: r_genome_scores
+        identifier: raw_genome_scores
+      - name: r_links
+        identifier: raw_links

@@ -1,0 +1,35 @@
+# Example dbt profile for this project.
+#
+# Your REAL profile lives at ~/.dbt/profiles.yml (Windows: %USERPROFILE%\.dbt\profiles.yml)
+# and is NOT committed. This example shows the shape with placeholders.
+#
+# The profile name "netflix" must match `profile: netflix` in dbt_project.yml.
+#
+# This project uses KEY-PAIR authentication (recommended for dbt service users).
+# No password lives anywhere. dbt signs a JWT with a local private key; the
+# matching public key is registered on the Snowflake `dbt` user.
+#
+# IMPORTANT for key-pair / JWT auth: use the ORG-ACCOUNT identifier
+# (e.g. ABCDORG-XY12345), NOT the dotted region form (xy12345.region.cloud).
+# Find yours with:  SELECT CURRENT_ORGANIZATION_NAME(), CURRENT_ACCOUNT_NAME();
+#
+# Generate the keypair (Git-bundled openssl on Windows):
+#   openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out dbt_key.p8 -nocrypt
+#   openssl rsa -in dbt_key.p8 -pubout -out dbt_key.pub
+# Register the public key body (no header lines) on the user:
+#   ALTER USER dbt SET RSA_PUBLIC_KEY='<public key body on one line>';
+
+netflix:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: YOUR_ORG-YOUR_ACCOUNT        # e.g. ABCDORG-XY12345 (org-account form!)
+      user: dbt
+      role: TRANSFORM
+      private_key_path: "C:/Users/<you>/.dbt/keys/dbt_key.p8"   # NEVER commit this key
+      warehouse: COMPUTE_WH
+      database: MOVIELENS
+      schema: DEV
+      threads: 4
+      client_session_keep_alive: false

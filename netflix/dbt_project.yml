@@ -1,0 +1,27 @@
+name: 'netflix'
+version: '1.0.0'
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'netflix'
+
+# Where dbt looks for each type of file.
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:         # directories removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Materialization defaults by folder.
+# staging -> views (cheap pass-throughs); dim/fct -> tables (read repeatedly).
+models:
+  netflix:
+    +materialized: view
+    dim:
+      +materialized: table
+    fct:
+      +materialized: table

@@ -1,0 +1,37 @@
+# ---- Python / virtualenv ----
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# ---- dbt artifacts ----
+target/
+dbt_packages/
+logs/
+*.log
+
+# ---- Secrets / credentials (NEVER COMMIT) ----
+profiles.yml
+.dbt/
+.env
+*.env
+!*.env.example
+!.env.example
+secrets/
+*.pem
+*.key
+*.p8
+*.pub
+keys/
+
+# ---- Data (not committed; too large / regenerable) ----
+data/
+*.csv
+!netflix/seeds/*.csv
+
+# ---- OS / editor cruft ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
